@@ -5,7 +5,7 @@ from dash import Dash, html, dcc, Input, Output, dash_table
 import dash_bootstrap_components as dbc
 
 # Load the Excel file
-file_path = r"C:\Users\rishabh.parikh\Desktop\a.xlsx"
+file_path = r"a.xlsx"
 df = pd.read_excel(file_path)
 df_attendance = pd.read_excel(file_path, sheet_name='Sheet2')
 
