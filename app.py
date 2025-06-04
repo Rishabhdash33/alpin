@@ -5,7 +5,7 @@ from dash import Dash, html, dcc, Input, Output, dash_table
 import dash_bootstrap_components as dbc
 
 # Load the Excel file
-file_path = "a.xlsx"
+file_path = r"C:\Users\rishabh.parikh\Desktop\a.xlsx"
 df = pd.read_excel(file_path)
 df_attendance = pd.read_excel(file_path, sheet_name='Sheet2')
 
@@ -71,9 +71,9 @@ navbar = html.Div(
     children=[
         # Logo on the left
         html.Img(
-            src="https://raw.githubusercontent.com/Rishabhdash33/alpin/main/Logo.png",
+            src="/assets/logo.png",
             style={
-                'height': '90px',
+                'height': '80px',
                 'position': 'absolute',
                 'left': '10px',
                 'top': '0px'
@@ -82,13 +82,13 @@ navbar = html.Div(
         # Centered stacked title
         html.Div([
             html.Div("THE ALPIN COMPANY", style={
-                'fontSize': '24px',
+                'fontSize': '35px',
                 'fontWeight': 'bold',
                 'color': 'white',
                 'textAlign': 'center'
             }),
             html.Div("DASHBOARD", style={
-                'fontSize': '16px',
+                'fontSize': '20px',
                 'color': 'white',
                 'textAlign': 'center',
                 'marginTop': '-4px'
