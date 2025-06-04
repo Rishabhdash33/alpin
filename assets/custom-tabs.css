@@ -1,0 +1,13 @@
+/* Inactive tab background color */
+.nav-link {
+    background-color: #d3d3d3 !important; /* light gray */
+    color: #000000 !important; /* black text */
+}
+
+/* Active tab background color */
+.nav-link.active {
+    background-color: #0d3f42 !important; /* dark teal/navy */
+    color: #ffffff !important; /* white text */
+    font-weight: bold;
+    border-bottom: 3px solid #0d3f42 !important; /* underline active tab */
+}
