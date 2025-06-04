@@ -54,7 +54,10 @@ def format_timedelta_as_hours(td):
     return f"{hours:02}:{minutes:02}:{seconds:02}"
 
 # App initialization
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+external_stylesheets=[
+    dbc.themes.BOOTSTRAP,
+    "https://raw.githubusercontent.com/Rishabhdash33/Rishabhdash33/main/custom-tabs.css"
+]
 app.title = "Merged Dashboard"
 
 # Layout
