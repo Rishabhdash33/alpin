@@ -5,7 +5,7 @@ from dash import Dash, html, dcc, Input, Output, dash_table
 import dash_bootstrap_components as dbc
 
 # Load the Excel file
-file_path = r"a.xlsx"
+file_path = r"C:\Users\rishabh.parikh\Desktop\a.xlsx"
 df = pd.read_excel(file_path)
 df_attendance = pd.read_excel(file_path, sheet_name='Sheet2')
 
@@ -58,28 +58,74 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = "Merged Dashboard"
 
 # Layout
-app.layout = dbc.Tabs([
+navbar = html.Div(
+    style={
+        'backgroundColor': '#0d3f42',
+        'padding': '10px',
+        'position': 'relative',
+        'height': '80px',
+        'display': 'flex',
+        'alignItems': 'center',
+        'justifyContent': 'center'
+    },
+    children=[
+        # Logo on the left
+        html.Img(
+            src="/assets/logo.png",
+            style={
+                'height': '90px',
+                'position': 'absolute',
+                'left': '10px',
+                'top': '0px'
+            }
+        ),
+        # Centered stacked title
+        html.Div([
+            html.Div("THE ALPIN COMPANY", style={
+                'fontSize': '24px',
+                'fontWeight': 'bold',
+                'color': 'white',
+                'textAlign': 'center'
+            }),
+            html.Div("DASHBOARD", style={
+                'fontSize': '16px',
+                'color': 'white',
+                'textAlign': 'center',
+                'marginTop': '-4px'
+            })
+        ])
+    ]
+)
+
+
+
+app.layout = html.Div([
+    navbar,
+    dbc.Tabs([
+
     dbc.Tab(label="Productivity Dashboard", children=[
         dbc.Container([
-            html.H2("Monthly Productivity Dashboard", className="text-center my-4"),
-            dbc.Row([
-                dbc.Col([
-                    html.Label("Select Month"),
-                    dcc.Dropdown(
-                        options=[{'label': m, 'value': m} for m in available_months],
-                        value=available_months[0],
-                        id='month-dropdown'
-                    )
-                ], width=4),
-                dbc.Col([
-                    html.Label("Select Employee"),
-                    dcc.Dropdown(
-                        options=[{'label': e, 'value': e} for e in available_employees],
-                        value=available_employees[0],
-                        id='employee-dropdown'
-                    )
-                ], width=4),
-            ], className="mb-4"),
+            #html.H2("", className="text-center", style={'marginTop': '0px'}),   
+
+        dbc.Row([
+    dbc.Col([
+        html.Label("Select Month"),
+        dcc.Dropdown(
+            options=[{'label': m, 'value': m} for m in available_months],
+            value=available_months[0],
+            id='month-dropdown'
+        )
+    ], style={'width': '45%', 'display': 'inline-block', 'marginTop': '25px'}), 
+
+    dbc.Col([
+        html.Label("Select Employee"),
+        dcc.Dropdown(
+            options=[{'label': e, 'value': e} for e in available_employees],
+            value=available_employees[0],
+            id='employee-dropdown'
+        )
+    ], style={'width': '45%', 'display': 'inline-block', 'marginTop': '25px'}),  
+], className="mb-4"),
 
             dbc.Card([
                 dbc.CardBody([
@@ -107,7 +153,7 @@ app.layout = dbc.Tabs([
                 ],
                 style_table={'overflowX': 'auto'},
                 style_cell={'textAlign': 'center'},
-                style_header={'backgroundColor': 'lightgrey', 'fontWeight': 'bold'},
+                style_header={'backgroundColor': '#f1e0e7', 'fontWeight': 'bold'}, #Weekly Productivit column colour 
                 page_size=10
             ),
 
@@ -134,7 +180,7 @@ app.layout = dbc.Tabs([
                 ],
                 style_table={'overflowX': 'auto'},
                 style_cell={'textAlign': 'center'},
-                style_header={'backgroundColor': 'lightgrey', 'fontWeight': 'bold'},
+                style_header={'backgroundColor': '#f1e0e7', 'fontWeight': 'bold'}, #Monthly Process-wise Productivity Details column colour 
                 page_size=15
             ),
 
@@ -157,16 +203,16 @@ app.layout = dbc.Tabs([
                 ],
                 style_table={'overflowX': 'auto'},
                 style_cell={'textAlign': 'center'},
-                style_header={'backgroundColor': 'lightgrey', 'fontWeight': 'bold'},
+                style_header={'backgroundColor': '#f1e0e7', 'fontWeight': 'bold'}, #Daily Process-wise Productivity Details column colour 
                 page_size=15
             ),
 
             html.Div(id='daily-summary', className='mt-4 mb-5')
-        ], fluid=True, style={'backgroundColor': '#e6f7ff', 'minHeight': '100vh'})
+        ], fluid=True, style={'backgroundColor': '#d2ebe1', 'minHeight': '100vh'})   #Change BG colour of Productivity Dashboard
     ]),
     dbc.Tab(label="Attendance Tracker", children=[
         html.Div([
-            html.H2("Attendance Tracker Dashboard", style={'textAlign': 'center'}),
+            #html.H2("", style={'textAlign': 'center'}),
             html.Div([
                 html.Label("Select Month:"),
                 dcc.Dropdown(id='att-month-dropdown', options=[{'label': m, 'value': m} for m in attendance_months])
@@ -183,12 +229,12 @@ app.layout = dbc.Tabs([
                 page_size=20,
                 style_table={'overflowX': 'auto'},
                 style_cell={'textAlign': 'left', 'padding': '5px'},
-                style_header={'backgroundColor': 'lightgrey', 'fontWeight': 'bold'}
+                style_header={'backgroundColor': '#f1e0e7', 'fontWeight': 'bold'} #Attendance Tracker column colour 
             )
-        ], style={'padding': '20px'})
+        ], style={'padding': '20px','backgroundColor': '#d2ebe1' })  #Change BG Colour Of Attendance Tracker Dashboard
     ])
 ])
-
+])
 # Callbacks
 @app.callback(
     Output('selected-info', 'children'),
@@ -235,7 +281,7 @@ def update_monthly_dashboard(month, employee):
         d["Actual Time"] = d.pop("UPT")
 
     return (
-        f"Summary for {employee} - {month}",
+        f"Monthly Summary For {employee} - {month}",
         format_timedelta_as_hours(actual_upt),
         format_timedelta_as_hours(expected_upt),
         format_timedelta_as_hours(diff) if diff.total_seconds() >= 0 else f"-{format_timedelta_as_hours(abs(diff))}",
@@ -339,6 +385,5 @@ def update_attendance_table(month, processor):
     return filtered_df.to_dict('records')
 
 # Run the app
-if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0", port=10000)
-
+if __name__ == '__main__':
+    app.run(debug=True, host='127.0.0.1', port=8050)
