@@ -71,7 +71,7 @@ navbar = html.Div(
     children=[
         # Logo on the left
         html.Img(
-            src="/assets/logo.png",
+            src="https://raw.githubusercontent.com/Rishabhdash33/alpin/main/Logo.png",
             style={
                 'height': '80px',
                 'position': 'absolute',
